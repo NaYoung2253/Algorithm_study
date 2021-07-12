@@ -6,31 +6,19 @@ A = []
 for i in range(N):
     A.append(list(map(int,sys.stdin.readline().split())))
 
-def merge_sort(array):
+def quick_sort(array):
     if len(array) <= 1:
         return array
+    
+    pivot = array[0]
+    tail = array[1:]
 
-    mid = len(array) // 2
-    left = merge_sort(array[:mid])
-    right = merge_sort(array[mid:])
+    left = [x for x in tail if x <= pivot]
+    right = [x for x in tail if x > pivot]
 
-    merged_arr = []
-    l = 0
-    r = 0
-    while l < len(left) and r < len(right):
-        if left[l] < right[r]:
-            merged_arr.append(left[l])
-            l += 1
-        else:
-            merged_arr.append(right[r])
-            r += 1
+    return quick_sort(left) + [pivot] + quick_sort(right)
 
-    merged_arr += left[l:]
-    merged_arr += right[r:]
-
-    return merged_arr
-
-sort_arr = merge_sort(A)
+sort_arr = quick_sort(A)
 
 for x in range(N):
     print(str(sort_arr[x][0]) + " " + str(sort_arr[x][1]))
